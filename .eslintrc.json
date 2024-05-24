@@ -23,7 +23,7 @@
   "plugins": ["react", "prettier", "import"],
   "rules": {
     "indent": ["error", 2],
-    "prettier/prettier": "warn",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "single"],
     "no-var": "error",
