@@ -1,0 +1,106 @@
+$border: #dfe5ec;
+$blue: #2196f3;
+$white: #ffffff;
+
+.main {
+  .sort-options {
+    display: flex;
+    justify-content: center;
+    .sort-option {
+      background-color: $white;
+      border: 1px solid $border;
+      padding: 15px;
+      cursor: pointer;
+      flex-grow: 1;
+      &:hover,
+      &:active {
+        background-color: $blue;
+        border-color: $blue;
+        color: $white;
+      }
+      &:first-child {
+        border-radius: 5px 0 0 5px;
+      }
+      &:last-child {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+    .selected-option {
+      background-color: $blue;
+      border-color: $blue;
+      color: $white;
+    }
+  }
+  .offer-card {
+    display: flex;
+    justify-content: center;
+  }
+  .increase-tickets {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+    flex-grow: 1;
+    color: $white;
+    background-color: $blue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 20px;
+    padding: 15px 20px;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  .loader {
+    width: 16px;
+    height: 16px;
+    box-shadow:
+      0 30px,
+      0 -30px;
+    border-radius: 4px;
+    background: currentColor;
+    display: block;
+    margin: 20px auto 0;
+    position: relative;
+    color: $blue;
+    transform: translateY(30px);
+    box-sizing: border-box;
+    animation: animloader 2s ease infinite;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    box-shadow:
+      0 30px,
+      0 -30px;
+    border-radius: 4px;
+    background: currentColor;
+    color: $blue;
+    position: absolute;
+    left: 30px;
+    top: 0;
+    animation: animloader 2s 0.2s ease infinite;
+  }
+  .loader::before {
+    animation-delay: 0.4s;
+    left: 60px;
+  }
+
+  @keyframes animloader {
+    0% {
+      top: 0;
+      color: $blue;
+    }
+    50% {
+      top: 30px;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    100% {
+      top: 0;
+      color: $blue;
+    }
+  }
+}
