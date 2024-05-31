@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -8,16 +10,32 @@ export const fetchSearchId = createAsyncThunk('data/fetchSearchId', async () => 
 })
 
 export const fetchTickets = createAsyncThunk('data/fetchTickets', async (searchId, { rejectWithValue }) => {
-  try {
-    const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
-    const data = await response.json()
-    if (data.tickets) {
-      return data.tickets
+  const MAX_RETRIES = 30
+  let tickets = []
+  let stop = false
+  let attempts = 0
+
+  while (!stop && attempts < MAX_RETRIES) {
+    try {
+      const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      if (data.tickets) {
+        tickets = tickets.concat(data.tickets)
+        stop = data.stop
+      } else {
+        return rejectWithValue('No tickets found')
+      }
+    } catch (error) {
+      attempts++
+      if (attempts >= MAX_RETRIES) {
+        return rejectWithValue(error.message)
+      }
     }
-    return rejectWithValue('No tickets found')
-  } catch (error) {
-    return rejectWithValue(error.message)
   }
+  return tickets
 })
 
 const dataSlice = createSlice({
@@ -56,7 +74,7 @@ const dataSlice = createSlice({
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.data = action.payload
+        state.data = state.data.concat(action.payload)
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.status = 'failed'

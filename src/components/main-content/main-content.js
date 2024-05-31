@@ -71,27 +71,39 @@ function MainContent() {
   return (
     <main className="main">
       <div className="sort-options">
-        <button
-          type="button"
-          className={`sort-option ${tab === 'cheapest' ? 'selected-option' : null}`}
-          onClick={() => dispatch(changeTab({ tab: 'cheapest' }))}
-        >
+        <label htmlFor="cheapest" className={`sort-option ${tab === 'cheapest' ? 'selected-option' : null}`}>
+          <input
+            type="radio"
+            id="cheapest"
+            name="radio"
+            checked={tab === 'cheapest'}
+            className="radio"
+            onChange={() => dispatch(changeTab({ tab: 'cheapest' }))}
+          />
           САМЫЙ ДЕШЕВЫЙ
-        </button>
-        <button
-          type="button"
-          className={`sort-option ${tab === 'fastest' ? 'selected-option' : null}`}
-          onClick={() => dispatch(changeTab({ tab: 'fastest' }))}
-        >
+        </label>
+        <label htmlFor="fastest" className={`sort-option ${tab === 'fastest' ? 'selected-option' : null}`}>
+          <input
+            type="radio"
+            id="fastest"
+            name="radio"
+            checked={tab === 'fastest'}
+            className="radio"
+            onChange={() => dispatch(changeTab({ tab: 'fastest' }))}
+          />
           САМЫЙ БЫСТРЫЙ
-        </button>
-        <button
-          type="button"
-          className={`sort-option ${tab === 'optimal' ? 'selected-option' : null}`}
-          onClick={() => dispatch(changeTab({ tab: 'optimal' }))}
-        >
+        </label>
+        <label htmlFor="optimal" className={`sort-option ${tab === 'optimal' ? 'selected-option' : null}`}>
+          <input
+            type="radio"
+            id="optimal"
+            name="radio"
+            checked={tab === 'optimal'}
+            className="radio"
+            onChange={() => dispatch(changeTab({ tab: 'optimal' }))}
+          />
           ОПТИМАЛЬНЫЙ
-        </button>
+        </label>
       </div>
       {status !== 'succeeded' ? <span className="loader" /> : null}
       <ul>
